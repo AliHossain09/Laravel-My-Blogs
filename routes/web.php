@@ -12,11 +12,11 @@ use App\Http\Controllers\Author\AuthorDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware'=>['auth', 'admin']], function () 
 //     {

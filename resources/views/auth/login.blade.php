@@ -1,7 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.frontend.app')
+@section('title', 'Login')
 
 @section('content')
-<div class="container">
+<!-- Banner -->
+  <div class="lg-mb-4 md-mb-3 mb-sm-2 gradient-advanced">
+<h1 class="d-flex justify-content-center align-items-center" style="height: 300px;"><b>LOGIN</b></h1>
+  </div>
+
+
+<div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
