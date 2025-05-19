@@ -49,6 +49,7 @@ Auth::routes();
     Route::middleware([RedirectAuthenticatedMiddleware::class])->group(function () {
         
         Route::get('/login', function () { return view('auth.login'); })->name('login');
+        
         Route::get('/register', function () { return view('auth.register'); })->name('register');
         Route::get('/password/reset', function () { return view('auth.passwords.email'); })->name('password.request');
         Route::get('/password/reset/{token}', function () { return view('auth.passwords.reset'); })->name('password.reset');
