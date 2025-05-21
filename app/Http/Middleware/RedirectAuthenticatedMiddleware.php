@@ -19,7 +19,7 @@ class RedirectAuthenticatedMiddleware
         if (Auth::check() && Auth::user()->role->id == 1) {
 
             // return redirect;
-            return redirect()->route( route: 'admin.dashboard');
+            return redirect()->route( route: 'admin.admin.dashboard');
            
              // Check if the user has the 'admin' role
         } elseif (Auth::check() && Auth::user()->role->id == 2) {

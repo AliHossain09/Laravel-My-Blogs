@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AuthorMiddleware;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Middleware\RedirectAuthenticatedMiddleware;
 use App\Http\Controllers\Author\AuthorDashboardController;
@@ -30,10 +31,11 @@ Auth::routes();
     //     Route::get('/dashboard', [DashboardController::class, 'index'])->name('author.dashboard');
     // });
 // ............................................................................................................
-    Route::prefix('admin')->middleware([AdminMiddleware::class])->group(function () {
+    Route::prefix('admin')->name('admin.')->middleware([AdminMiddleware::class])->group(function () {
         // Route::get('/dashboard', function () { return view('dashboard');});
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::resource('tag', TagController::class);
     
        
     });

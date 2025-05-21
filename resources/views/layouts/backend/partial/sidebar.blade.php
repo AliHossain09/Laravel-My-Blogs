@@ -12,11 +12,20 @@
                         <ul class="dropdown-menu pull-right">
                             <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
+                        
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        <i class="material-icons">input</i> Sign Out
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                
+                                
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -26,24 +35,99 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li class="active">
-                        <a href="{{ route('admin.dashboard') }}">
-                            <i class="material-icons">home</i>
-                            <span>Home</span>
+                    {{--  @if (Auth::user()->role == 'admin') --}}
+                    @if (Request::is ('admin*'))
+                    {{-- Dashboard Menu --}}
+                        <li class="{{ (Request()->is('admin/dashboard')) ? 'active' : '' }}">
+                        <a href="{{ route('admin.admin.dashboard') }}">
+                            <i class="material-icons">dashboard</i>
+                            <span>Dashboard</span>
                         </a>
                     </li>
+
+                    {{-- Tag Menu --}}
+                    <li class="{{ (Request()->is('admin/tag*')) ? 'active' : '' }}">
+                        <a href="{{ route('admin.tag.index') }}">
+                            <i class="material-icons">label</i>
+                            <span>Tag</span>
+                        </a>
+                    </li>
+                    {{-- Divider Menu --}}
+                    <li class="header">System</li>
+                    {{-- Logout Menu --}}
+                    <li>
+                       <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                        <i class="material-icons">input</i>
+                        <span>Logout</span>
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                    </li>
+                    @endif
+
+                    @if (request::is ('author*'))
+                    <li class="{{ (Request()->is('author/dashboard')) ? 'active' : '' }}">
+                        <a href="{{ route('author.dashboard') }}">
+                            <i class="material-icons">dashboard</i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="header">System</li>
+                    <li class="active">
+                       <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                            <i class="material-icons">input</i>
+                            <span>Logout</span>
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
+                        
+                    @endif
+
+                    
                     
                 </ul>
             </div>
             <!-- #Menu -->
-            <!-- Footer -->
+            <!-- Admin Footer -->
+            @if (Request::is ('admin*'))
             <div class="legal">
                 <div class="copyright">
-                    &copy; 2016 - 2017 <a href="javascript:void(0);">AdminBSB - Material Design</a>.
+                    
+                    &copy; 2016 - 2017 <a href="javascript:void(0);">Admin - Dashboard</a>.
                 </div>
                 <div class="version">
-                    <b>Version: </b> 1.0.5
+                    <b>Created: </b> ALI HOSSAIN
                 </div>
             </div>
-            <!-- #Footer -->
+            <!-- # Admin Footer End -->
+            @endif
+           
+           &copy; 2016 - 2017 <a href="javascript:void(0);">{{ (Request()->is('admin/dashboard')) ? 'Admin - Dashboard' : 'Author- Dashboard' }}</a>.
+            
+           
+           <!-- Author Footer -->
+            
+            {{-- @if (Request::is ('author*'))
+            <div class="legal">
+                <div class="copyright">
+                    &copy; 2016 - 2017 <a href="javascript:void(0);">Author- Dashboard</a>.
+                </div>
+                <div class="version">
+                    <b>Created: </b> ALI HOSSAIN
+                </div>
+            </div> 
+            @endif --}}
+
+            <!-- # Author Footer End -->
+            
         </aside>

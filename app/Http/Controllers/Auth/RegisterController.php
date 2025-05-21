@@ -40,7 +40,7 @@ class RegisterController extends Controller
     {
         if (Auth::check() && Auth::user()->role->id == 1) {
             // return redirect;
-            $this->redirectTo = route('admin.dashboard');
+            $this->redirectTo = route('admin.admin.dashboard');
             
                 // return redirect;
         }else $this->redirectTo = route('author.dashboard');
