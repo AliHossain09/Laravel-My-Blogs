@@ -43,7 +43,8 @@ class CategoryController extends Controller
         if(isset($request->image))
         {
             // Save the image with a unique name and the original file extension
-            $imageName = time().'.'.$request->image->extension();
+            $imageName = $request->categoryName.''.time().'.'.$request->image->extension();
+            
 
             // Define the paths for the images
             $slider = public_path('categoryImages/slider');
