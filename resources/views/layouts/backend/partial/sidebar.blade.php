@@ -52,8 +52,18 @@
                             <span>Tag</span>
                         </a>
                     </li>
+                    
+                    {{-- Category Menu --}}
+                    <li class="{{ (Request()->is('admin/category*')) ? 'active' : '' }}">
+                        <a href="{{ route('admin.category.index') }}">
+                            <i class="material-icons">apps</i>
+                            <span>Category</span>
+                        </a>
+                    </li>
+
                     {{-- Divider Menu --}}
                     <li class="header">System</li>
+
                     {{-- Logout Menu --}}
                     <li>
                        <a class="dropdown-item" href="{{ route('logout') }}"
@@ -61,11 +71,12 @@
                             document.getElementById('logout-form').submit();">
                         <i class="material-icons">input</i>
                         <span>Logout</span>
-                                    </a>
+                        </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+
                     </li>
                     @endif
 
@@ -106,7 +117,7 @@
                     &copy; 2016 - 2017 <a href="javascript:void(0);">Admin - Dashboard</a>.
                 </div>
                 <div class="version">
-                    <b>Created: </b> ALI HOSSAIN
+                    <b>Designed & Powered by : </b> ALI HOSSAIN
                 </div>
             </div>
             <!-- # Admin Footer End -->

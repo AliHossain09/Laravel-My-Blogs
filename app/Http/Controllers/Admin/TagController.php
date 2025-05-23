@@ -76,10 +76,11 @@ class TagController extends Controller
         $request->validate([
             'TagName' => 'required|string|max:255',
          ]);
-
+            
+         // add new post
             $tag = Tag::findOrFail($id);
-                $tag->name = $request->TagName;
-                $tag->slug = Str::slug($request->name);
+            $tag->name = $request->TagName;
+            $tag->slug = Str::slug($request->name);
             
             $tag->save();
     

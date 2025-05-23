@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title', 'Edit Tag')
+@section('title', 'Create Category')
 
 @push('css')
     
@@ -14,27 +14,34 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                EDIT YOUR"S TAG
+                                ADD NEW CATEGORY
                                 </h2>
                         </div>
 
                         <div class="body">
-                            <form action="{{ route('admin.tag.update', $tag->id ) }}" method="POST">
+                            <form action="{{ route('admin.category.store') }}" method="POST" enctype="multipart/form-data">
+                                {{-- CSRF Token --}}
                                 @csrf
-                                @method('PUT')
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <input type="text" id="TagName" name="TagName" class="form-control" value="{{ $tag->name }}" >
-                                        <label class="form-label">Tag Name</label>
+                                        <input type="text" id="categoryName" name="categoryName" class="form-control" value="{{ old('categoryName') }}" >
+                                        <label class="form-label">Category Name</label>
                                     </div>
-                                    @error('TagName')
+                                    @error('categoryName')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
 
+                                {{-- image Input --}}
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="file" id="image" name="image" class="form-control" value="" >
+                                    </div>
+                                   
+
                                 <br>
 
-                                <a class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.tag.index') }}">Back</a>
+                                <a class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.category.index') }}">Back</a>
                                  <button type="submit" class="btn btn-primary m-t-15 waves-effect">Submit</button>
                             </form>
                         </div>
