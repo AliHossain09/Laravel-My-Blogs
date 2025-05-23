@@ -36,7 +36,7 @@
                                 {{-- image Input --}}
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <img src="{{ asset('images/'.$category->image) }}" style="width: 50px; height: auto;">
+                                        <img src="{{ asset('categoryImages/'.$category->image) }}" style="width: 50px; height: auto;">
                                         <input type="file" id="image" name="image" class="form-control" value="{{ $category->image }}" >
                                     </div>
                                    

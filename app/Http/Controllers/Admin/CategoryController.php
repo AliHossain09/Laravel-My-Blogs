@@ -154,8 +154,19 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         $category = Category::findOrFail($id);
+        // Delete the image from the server
+        $slider = public_path('categoryImages/slider');
+        $categoryFolder = public_path('categoryImages');
+       
+        if (file_exists($slider.'/'.$category->image)) { 
+            unlink($slider.'/'.$category->image);
+           }
+        if (file_exists($categoryFolder.'/'.$category->image)) {
+            unlink($categoryFolder.'/'.$category->image);
+            }
+       
+       
         $category->delete();
-
         toastr()->success('Category deleted successfully.');
         return redirect()->route('admin.category.index');
     }
