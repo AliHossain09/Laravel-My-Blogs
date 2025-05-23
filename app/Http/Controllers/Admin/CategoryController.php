@@ -97,6 +97,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $category = Category::findOrFail($id);
         // Validate the request data
         $request->validate([
             'categoryName' => 'required|string|max:255',
@@ -111,18 +112,33 @@ class CategoryController extends Controller
             $slider = public_path('categoryImages/slider');
             $categoryFolder = public_path('categoryImages');
 
-            Image::load($request->image->path())->resize(500, 333)->save( $slider.'/'.$imageName);
-            Image::load($request->image->path())->resize(1600, 479)->save( $categoryFolder.'/'.$imageName);    
+            
+            // Delete the old image if it exists
+            if ($category->image != 'category.png' && file_exists($slider.'/'.$category->image)) {
+                unlink($slider.'/'.$category->image);
+
+                 // Image::load($request->image->path())->resize(500, 333)->save( $slider.'/'.$imageName);
+                Image::load($request->image->path())->resize(500, 333)->save( $slider.'/'.$imageName);
+            }
+
+            // Delete the old image if it exists
+            if ($category->image != 'category.png' && file_exists($categoryFolder.'/'.$category->image)) {
+                unlink($categoryFolder.'/'.$category->image);
+
+                 // Image::load($request->image->path())->resize(1600, 479)->save( $categoryFolder.'/'.$imageName);   
+                 Image::load($request->image->path())->resize(1600, 479)->save( $categoryFolder.'/'.$imageName);  
+            }
+            
+            
         }
         else
         {
             // If no new image is uploaded, keep the old image
-            $category =  Category::findOrFail($id);
-            $imageName = $category->image;
+           $imageName = $category->image;
         } 
     
         // update  post
-        $category =  Category::findOrFail($id);
+        $category =  Category::findOrFail($id);   //Optional Because we are using the same variable name
         $category->name = $request->categoryName;
         $category->slug = Str::slug($request->categoryName);
         $category->image = $imageName;
