@@ -114,7 +114,7 @@ class CategoryController extends Controller
 
             
             // Delete the old image if it exists
-            if ($category->image != 'category.png' && file_exists($slider.'/'.$category->image)) {
+            if ($category->image != $imageName && file_exists($slider.'/'.$category->image)) {
                 unlink($slider.'/'.$category->image);
 
                  // Image::load($request->image->path())->resize(500, 333)->save( $slider.'/'.$imageName);
@@ -122,7 +122,7 @@ class CategoryController extends Controller
             }
 
             // Delete the old image if it exists
-            if ($category->image != 'category.png' && file_exists($categoryFolder.'/'.$category->image)) {
+            if ($category->image != $imageName && file_exists($categoryFolder.'/'.$category->image)) {
                 unlink($categoryFolder.'/'.$category->image);
 
                  // Image::load($request->image->path())->resize(1600, 479)->save( $categoryFolder.'/'.$imageName);   
