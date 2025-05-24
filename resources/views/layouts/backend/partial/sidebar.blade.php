@@ -61,6 +61,14 @@
                         </a>
                     </li>
 
+                    {{-- Post Menu --}}
+                    <li class="{{ (Request()->is('admin/post*')) ? 'active' : '' }}">
+                        <a href="{{ route('admin.post.index') }}">
+                            <i class="material-icons">library_books</i>
+                            <span>Posts</span>
+                        </a>
+                    </li>
+
                     {{-- Divider Menu --}}
                     <li class="header">System</li>
 

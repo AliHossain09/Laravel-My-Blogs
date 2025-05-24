@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
+use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AuthorMiddleware;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Middleware\RedirectAuthenticatedMiddleware;
 use App\Http\Controllers\Author\AuthorDashboardController;
-
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -38,6 +38,7 @@ Auth::routes();
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
         Route::resource('tag', TagController::class);
         Route::resource('category', CategoryController::class);
+         Route::resource('post', PostController::class);
     
        
     });

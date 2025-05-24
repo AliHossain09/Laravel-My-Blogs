@@ -14,6 +14,7 @@
                 <a class="btn btn-primary" href="{{ route('admin.tag.create') }}" role="button">
                     <i class="material-icons">add</i>
                     <span>Add New Tag</span>
+                   
                 </a>
             </div>
             
@@ -24,6 +25,7 @@
                         <div class="header">
                             <h2>
                                 ALL TAGES
+                                 <span class=" badge bg-blue ">{{$tages->count()}}</span>
                             </h2>
                             
                         </div>
@@ -34,6 +36,7 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Name</th>
+                                            <th>Post Count</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                             <th>Action</th>
@@ -43,6 +46,7 @@
                                         <tr>
                                              <th>ID</th>
                                             <th>Name</th>
+                                            <th>Post Count</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                             <th>Action</th>
@@ -53,6 +57,15 @@
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $tag->name }}</td>
+
+                                                <td>
+                                                    @if ($tag->posts->count() > 0)
+                                                        <span>{{ $tag->posts->count() }}</span>
+                                                    @else
+                                                        <span class="badge bg-red">0</span>
+                                                    @endif
+                                                </td>
+
                                                 <td>{{ $tag->created_at }}</td>
                                                 <td>{{ $tag->updated_at }}</td>
                                                 <td>

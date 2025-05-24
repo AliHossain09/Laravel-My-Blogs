@@ -43,7 +43,7 @@ class CategoryController extends Controller
         if(isset($request->image))
         {
             // Save the image with a unique name and the original file extension
-            $imageName = $request->categoryName.''.time().'.'.$request->image->extension();
+            $imageName = $request->categoryName.'_'.time().'.'.$request->image->extension();
             
 
             // Define the paths for the images
@@ -109,7 +109,7 @@ class CategoryController extends Controller
         // Check if an image is uploaded
         if(isset($request->image))
         {
-           $imageName = time().'.'.$request->image->extension();
+           $imageName = $request->categoryName.'_'.time().'.'.$request->image->extension();
             $slider = public_path('categoryImages/slider');
             $categoryFolder = public_path('categoryImages');
 
