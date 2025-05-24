@@ -33,13 +33,9 @@
                                 </div>
 
                                 {{-- image Input --}}
-                                <div class="form-group form-float">
-                                    <div class="form-line">
-                                        <input type="file" id="image" name="image" class="form-control" value="" >
-                                    </div>
-                                   
-
-                                <br>
+                                <div class="form-group">
+                                    <input type="file" id="image" name="image" class="form-control" value="" >
+                                </div>
 
                                 <a class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.category.index') }}">Back</a>
                                  <button type="submit" class="btn btn-primary m-t-15 waves-effect">Submit</button>

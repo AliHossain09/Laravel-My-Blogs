@@ -95,9 +95,10 @@
                                                 <td>{{ $post->created_at }}</td>
                                                 <td>{{ $post->updated_at }}</td>
                                                 <td class="text-center">
-                                                    <img class="img-thumbnail" src="{{ asset('postImages/'.$post->image) }}" style="width: 200px; height: auto;"> </td>
+                                                    <img class="img-thumbnail" src="{{ asset('postImages/'.$post->image) }}" style="width: 100px; height: auto;"> </td>
                                                  <td>
-                                                    <a href="{{ route('admin.post.edit', $post->id) }}" class="btn btn-info waves-effect">
+                                                    <div style="display: flex; justify-content: space-between; gap: 5px;">
+                                                        <a href="{{ route('admin.post.edit', $post->id) }}" class="btn btn-info waves-effect">
                                                         <i class="material-icons">edit</i>
                                                     </a>
 
@@ -105,6 +106,7 @@
                                                     onclick="deletePost({{$post->id}})">
                                                         <i class="material-icons">delete</i>
                                                     </button>
+                                                    </div>
 
                                                     <form id="delete-form-{{$post->id}}" action="{{ route('admin.post.destroy', $post->id) }}"method="POST" style="display: none;">
                                                         @csrf

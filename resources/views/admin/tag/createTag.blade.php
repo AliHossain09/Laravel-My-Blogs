@@ -31,7 +31,7 @@
                                     @enderror
                                 </div>
 
-                                <br>
+                                
 
                                 <a class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.tag.index') }}">Back</a>
                                  <button type="submit" class="btn btn-primary m-t-15 waves-effect">Submit</button>
