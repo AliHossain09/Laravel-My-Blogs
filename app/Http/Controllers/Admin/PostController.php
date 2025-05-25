@@ -42,7 +42,7 @@ class PostController extends Controller
             'postTitle' => 'required|string|max:255',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
             'category_id' => 'required|exists:categories,id',
-            'tags' => 'required|nullable',
+            'tags' => 'nullable',
             'body' => 'required|string',
 
         ]);
@@ -111,7 +111,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.post.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -119,7 +121,59 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        // Validate the request data
+        $request->validate([
+            'postTitle' => 'required|string|max:255',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
+            'category_id' => 'required|exists:categories,id',
+            'tags' => 'nullable',
+            'body' => 'required|string',
+        ]);
+
+        // Check if an image is uploaded
+        if (isset($request->image)) {
+            // Save the image with a unique name and the original file extension
+            $imageName = $request->postTitle . '_' . time() . '.' . $request->image->extension();
+
+            // Define the path for the post images
+            $postImagePath = public_path('postImages');
+
+            // Delete the old image if it exists
+            if ($post->image != $imageName && file_exists($postImagePath.'/'.$post->image)) {
+                unlink($postImagePath.'/'.$post->image);
+
+                // Resize the image to 800x600 and save it
+            Image::load($request->image->path())->resize(1600, 1066)->save($postImagePath . '/' . $imageName);
+            }
+
+            
+        } else {
+            // If no uploaded image, keep the existing image name
+            $imageName = $post->image;
+        }
+
+        // Update the post details
+        $post->title = $request->postTitle;
+        $post->slug = Str::slug($request->postTitle, '-');
+        $post->image = $imageName; // Updated image
+        $post->body = $request->body;
+
+        if (isset($request->status)) {
+            $post->status = true; // If status is set, mark as published
+        } else {
+            $post->status = false; // If status is not set, mark as draft
+        }
+        
+        // Save the updated post
+        $post->save();
+
+        // Sync the category and tags for the post
+        $post->categories()->sync([$request->category_id]);
+        $post->tags()->sync($request->tags);
+
+        // Redirect to the index page with success message
+        toastr()->success('Post updated successfully.');
+        return redirect()->route('admin.post.index');
     }
 
     /**
@@ -127,6 +181,17 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        // Delete the post image from the server
+        $postImagePath = public_path('postImages');
+        if (file_exists($postImagePath . '/' . $post->image)) {
+            unlink($postImagePath . '/' . $post->image);
+        }
+
+        // Delete the post from the database
+        $post->delete();
+
+        // Redirect to the index page with success message
+        toastr()->success('Post deleted successfully.');
+        return redirect()->route('admin.post.index');
     }
 }
