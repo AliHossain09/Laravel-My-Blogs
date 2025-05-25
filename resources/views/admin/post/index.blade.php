@@ -97,7 +97,10 @@
                                                 <td class="text-center">
                                                     <img class="img-thumbnail" src="{{ asset('postImages/'.$post->image) }}" style="width: 100px; height: auto;"> </td>
                                                  <td>
-                                                    <div style="display: flex; justify-content: space-between; gap: 5px;">
+                                                    <div style="display: flex; justify-content: space-around; gap: 5px;">
+                                                    <a href="{{ route('admin.post.show', $post->id) }}" class="btn btn-success waves-effect">
+                                                        <i class="material-icons">visibility</i>
+                                                    </a>
                                                         <a href="{{ route('admin.post.edit', $post->id) }}" class="btn btn-info waves-effect">
                                                         <i class="material-icons">edit</i>
                                                     </a>

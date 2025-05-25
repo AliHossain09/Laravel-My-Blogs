@@ -103,7 +103,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.post.show', compact('post', 'categories', 'tags'));
     }
 
     /**

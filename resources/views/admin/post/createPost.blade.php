@@ -9,6 +9,24 @@
 
 @section('content')
     <div class="container-fluid">
+        {{-- Strat Head Section --}}
+        <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="bg-cyan" style="margin-bottom: 20px; padding-top: 10px; padding-bottom: 10px; padding-left: 20px; ">
+                        {{-- Header --}}
+                            <div class="header" style="display: flex; align-items: center;">
+                                <i class="material-icons">library_books</i>
+                                <span style="margin-right: 20px;">POST</span>
+                                <i class="material-icons">edit</i>
+                                <span>CREATE</span>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+        {{-- End Head Section --}}
+
+            <!-- Start Vertical Layout | With Floating Label -->
         <form action="{{ route('admin.post.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
