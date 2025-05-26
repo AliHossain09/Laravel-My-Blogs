@@ -179,6 +179,39 @@ class PostController extends Controller
         return redirect()->route('admin.post.index');
     }
 
+
+    /**
+     * Approve the specified post.
+     */
+    public function approve($id)
+    {
+        // Find the post by ID
+        $post = Post::findOrFail($id);
+
+        // Check if the post is already approved
+        if ($post->is_approved) {
+            toastr()->info('Post is already approved.');
+            return redirect()->route('admin.post.index');
+        }
+
+        // Approve the post
+        $post->is_approved = true;
+        $post->save();
+
+        // Redirect to the index page with success message
+        toastr()->success('Post approved successfully.');
+        return redirect()->route('admin.post.index');
+    }
+    /**
+     * Display a listing of pending posts.
+     */
+    public function pending()
+    {
+        // Get all posts that are not approved
+        $posts = Post::where('is_approved', false)->latest()->get();
+        return view('admin.post.pending', compact('posts'));
+    }
+
     /**
      * Remove the specified resource from storage.
      */

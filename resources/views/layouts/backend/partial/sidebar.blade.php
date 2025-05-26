@@ -68,6 +68,13 @@
                             <span>Posts</span>
                         </a>
                     </li>
+                    {{-- pending Menu --}}
+                    <li class="{{ (Request()->is('admin/pending/post*')) ? 'active' : '' }}">
+                        <a href="{{ route('admin.post.pending') }}">
+                            <i class="material-icons">pending</i>
+                            <span>Pending Post</span>
+                        </a>
+                    </li>
 
                     {{-- Divider Menu --}}
                     <li class="header">System</li>

@@ -40,6 +40,11 @@ Auth::routes();
         Route::resource('tag', TagController::class);
         Route::resource('category', CategoryController::class);
         Route::resource('post', PostController::class);
+
+        Route::put('/post/{id}/approve', [PostController::class, 'approve'])->name('post.approve');
+         Route::get('pending/post', [PostController::class, 'pending'])->name('post.pending');
+
+
     
        });
 

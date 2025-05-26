@@ -24,37 +24,28 @@
                     <div style="display: flex; justify-content: space-between; align-items: center; ">
                         
                         <a class="btn btn-danger m-t-15 waves-effect" href="{{ route('author.post.index') }}">Back</a>
+                        
                         @if ( $post->is_approved == false)
-                            <button type="button" class="btn btn-success waves-effect"> 
+                            <button type="button" class="btn btn-success waves-effect" onclick="approvePost({{ $post->id }})">
                                 <i class="material-icons">done</i>
                                 <span>Approve</span>
                             </button>
-                            @elseif ( $post->is_approved == true)
+
+                            <form id="approval-form-{{ $post->id }}" action="{{ route('admin.post.approve', $post->id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('PUT')
+                            </form>
+                        
+                        @elseif( $post->is_approved == true)
                             <button type="button" class="btn btn-success waves-effect" disabled> 
                                 <i class="material-icons">done</i>
                                 <span>Approved</span>
                             </button>
-                        @else
-                            <button type="button" class="btn btn-danger waves-effect"> 
-                                <i class="material-icons">close</i>
-                                <span>Rejected</span>
-                            </button>
                         @endif
-
-                        {{-- Approve Button --}}
-                        {{-- @if ($post->status == 'pending')
-                        <a class="btn btn-warning m-t-15 waves-effect" href="{{ route('admin.post.approve', $post->id) }}">Approve</a>
-                        @elseif ($post->status == 'approved')
-                        <a class="btn btn-success m-t-15 waves-effect" href="{{ route('admin.post.approve', $post->id) }}">Approved</a>
-                        @else
-                        <a class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.post.approve', $post->id) }}">Rejected</a>
-                            
-                        @endif --}}
-                        
-                </div>
+                    </div>
                 <br>
 
-                </div>
+            </div>
         </div>
         {{-- End Head Section --}}
 
@@ -153,6 +144,52 @@
     tinymce.suffix = ".min";
     tinyMCE.baseURL = '{{ asset('assets/backend/plugins/tinymce') }}';
 });
+
+    // Approval & Sweetalert Method
+    
+        function approvePost(id){
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be approved this post!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, approve it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    event.preventDefault();
+                    document.getElementById('approval-form-'+id).submit();
+                    swalWithBootstrapButtons.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'The post remain pending :)',
+                        'info'
+                    )
+                }
+            })
+        }
+    
     </script>
+
+    
+    {{-- Sweetalert CDN --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endpush
 
