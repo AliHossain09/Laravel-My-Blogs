@@ -10,39 +10,6 @@
     <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
     
 
-    {{-- <style>
-        body {
-          background-color: #f4f8fb;
-        }
-        .card-title {
-          font-size: 1rem;
-          font-weight: bold;
-        }
-        .card-footer {
-          font-size: 0.9rem;
-        }
-        .author-img {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-        .load-more {
-          background-color: #cbdcf6;
-        }
-        footer {
-          background-color: white;
-          padding: 40px 0;
-        }
-        .gradient-advanced {
-          background: radial-gradient(50% 123.47% at 50% 50%, #00ff94 0%, #720059 100%),
-          linear-gradient(121.28deg, #669600 0%, #ff0000 100%),
-          linear-gradient(360deg, #0029ff 0%, #8fff00 100%),
-          radial-gradient(100% 164.72% at 100% 100%, #6100ff 0%, #00ff57 100%),
-          radial-gradient(100% 148.07% at 0% 0%, #fff500 0%, #51d500 100%);
-          background-blend-mode: screen, color-dodge, overlay, difference, normal;
-}
-      </style> --}}
 
       <!-- Favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -71,6 +38,7 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="{{ asset('assets/backend/css/themes/all-themes.css') }}" rel="stylesheet" />
+   
 
       @stack('css')
 </head>
@@ -148,5 +116,9 @@
     
     @stack('js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-    </body>
+
+    
+
+
+</body>
 </html>

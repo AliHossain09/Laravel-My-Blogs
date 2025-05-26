@@ -107,7 +107,17 @@ class AuthorPostController extends Controller
      */
     public function show(Post $post)
     {
-         $categories = Category::all();
+        // Check if the post belongs to the authenticated user
+        if ($post->user_id != Auth::id()) {
+            return redirect()->route('author.post.index')->with('error', 'You do not have permission to view this post.');
+        }
+        // Fetch all categories and tags for the post
+        if (!Auth::check() || Auth::User()->role->id != 2) {
+            return redirect()->route('login')->with('error', 'You do not have author access.');
+        }
+        $categories = Category::all();
+        // Fetch all tags for the post
+        
         $tags = Tag::all();
         return view('author.post.show', compact('post', 'categories', 'tags'));
     }
@@ -117,6 +127,15 @@ class AuthorPostController extends Controller
      */
     public function edit(Post $post)
     {
+        // Check if the post belongs to the authenticated user
+        if ($post->user_id != Auth::id()) {
+            return redirect()->route('author.post.index')->with('error', 'You do not have permission to edit this post.');
+        }
+        // Fetch all categories and tags for the form
+        if (!Auth::check() || Auth::User()->role->id != 2) {
+            return redirect()->route('login')->with('error', 'You do not have author access.');
+        }
+        // Fetch all categories and tags for the form
         $categories = Category::all();
         $tags = Tag::all();
         return view('author.post.edit', compact('post', 'categories', 'tags'));
@@ -188,6 +207,22 @@ class AuthorPostController extends Controller
      */
     public function destroy(Post $post)
     {
+        // Check if the post belongs to the authenticated user
+        if ($post->user_id != Auth::id()) {
+            return redirect()->route('author.post.index')->with('error', 'You do not have permission to delete this post.');
+        }
+        // Check if the user is authenticated and has author access
+        if (!Auth::check() || Auth::User()->role->id != 2) {
+            return redirect()->route('login')->with('error', 'You do not have author access.');
+        }
+        // Check if the post exists
+        if (!$post) {
+            return redirect()->route('author.post.index')->with('error', 'Post not found.');
+        }
+        // Check if the post is already deleted
+        if ($post->deleted_at) {
+            return redirect()->route('author.post.index')->with('error', 'Post is already deleted.');
+        }
          // Delete the post image from the server
         $postImagePath = public_path('postImages');
         if (file_exists($postImagePath . '/' . $post->image)) {
