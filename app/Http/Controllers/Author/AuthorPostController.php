@@ -1,25 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Author;
 
 use App\Models\Tag;
 use App\Models\Post;
-use Spatie\Image\Image;
 use App\Models\Category;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Spatie\Image\Image;
 
-class PostController extends Controller
+class AuthorPostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = Post::latest()->get();
-        return view('admin.post.index', compact('posts'));
+       if (!Auth::check() || Auth::User()->role->id != 2) {
+            return redirect()->route('login')->with('error', 'You do not have author access.');
+        }
+       
+         $posts = Auth::User()->posts()->latest()->get();
+        return view('author.post.index', compact('posts'));
     }
 
     /**
@@ -29,7 +33,7 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $tags = Tag::all();
-        return view('admin.post.createPost', compact('categories', 'tags'));
+        return view('author.post.createPost', compact('categories', 'tags'));
     }
 
     /**
@@ -83,7 +87,7 @@ class PostController extends Controller
         } else {
             $post->status = false; // If status is not set, mark as draft
         }
-        $post->is_approved = true; // Automatically approve the post
+        $post->is_approved = false; // Automatically approve the post
 
         // Save the post
         $post->save();
@@ -95,7 +99,7 @@ class PostController extends Controller
 
         // Redirect to the index page with success message
         toastr()->success('Post created successfully.');
-        return redirect()->route('admin.post.index');
+        return redirect()->route('author.post.index');
     }
 
     /**
@@ -103,9 +107,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $categories = Category::all();
+         $categories = Category::all();
         $tags = Tag::all();
-        return view('admin.post.show', compact('post', 'categories', 'tags'));
+        return view('author.post.show', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -115,7 +119,7 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $tags = Tag::all();
-        return view('admin.post.edit', compact('post', 'categories', 'tags'));
+        return view('author.post.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -165,7 +169,7 @@ class PostController extends Controller
         } else {
             $post->status = false; // If status is not set, mark as draft
         }
-        $post->is_approved = true; // Automatically approve the post
+        $post->is_approved = false; // Automatically approve the post
         
         // Save the updated post
         $post->save();
@@ -176,7 +180,7 @@ class PostController extends Controller
 
         // Redirect to the index page with success message
         toastr()->success('Post updated successfully.');
-        return redirect()->route('admin.post.index');
+        return redirect()->route('author.post.index');
     }
 
     /**
@@ -184,7 +188,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        // Delete the post image from the server
+         // Delete the post image from the server
         $postImagePath = public_path('postImages');
         if (file_exists($postImagePath . '/' . $post->image)) {
             unlink($postImagePath . '/' . $post->image);
@@ -200,6 +204,6 @@ class PostController extends Controller
 
         // Redirect to the index page with success message
         toastr()->success('Post deleted successfully.');
-        return redirect()->route('admin.post.index');
+        return redirect()->route('author.post.index');
     }
 }

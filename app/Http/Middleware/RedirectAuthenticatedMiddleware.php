@@ -25,7 +25,7 @@ class RedirectAuthenticatedMiddleware
         } elseif (Auth::check() && Auth::user()->role->id == 2) {
 
                // return redirect;
-                return redirect()->route( route: 'author.dashboard');
+                return redirect()->route( route: 'author.author.dashboard');
         }
         return $next($request);
     }

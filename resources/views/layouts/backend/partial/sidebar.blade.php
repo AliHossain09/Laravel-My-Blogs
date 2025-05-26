@@ -90,13 +90,23 @@
 
                     @if (request::is ('author*'))
                     <li class="{{ (Request()->is('author/dashboard')) ? 'active' : '' }}">
-                        <a href="{{ route('author.dashboard') }}">
+                        <a href="{{ route('author.author.dashboard') }}">
                             <i class="material-icons">dashboard</i>
                             <span>Dashboard</span>
                         </a>
                     </li>
+                    {{-- Post Menu --}}
+                    <li class="{{ (Request()->is('author/post*')) ? 'active' : '' }}">
+                        <a href="{{ route('author.post.index') }}">
+                            <i class="material-icons">library_books</i>
+                            <span>Posts</span>
+                        </a>
+                    </li>
 
+                    {{-- Divider Menu --}}
                     <li class="header">System</li>
+
+                    {{-- Logout Menu --}}
                     <li class="active">
                        <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();

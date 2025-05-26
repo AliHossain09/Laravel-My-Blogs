@@ -40,7 +40,7 @@ class LoginController extends Controller
             $this->redirectTo = route('admin.admin.dashboard');
             
                 // return redirect;
-        }else $this->redirectTo = route('author.dashboard');
+        }else $this->redirectTo = route('author.author.dashboard');
            
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');

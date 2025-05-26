@@ -16,7 +16,7 @@ class AuthorMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role->id == 2) {
+        if (Auth::check() && Auth::User()->role->id == 2) {
 
             // Check if the user has the 'author' role
             return $next($request);

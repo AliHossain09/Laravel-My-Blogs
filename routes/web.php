@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Middleware\RedirectAuthenticatedMiddleware;
 use App\Http\Controllers\Author\AuthorDashboardController;
+use App\Http\Controllers\Author\AuthorPostController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -38,18 +39,17 @@ Auth::routes();
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
         Route::resource('tag', TagController::class);
         Route::resource('category', CategoryController::class);
-         Route::resource('post', PostController::class);
+        Route::resource('post', PostController::class);
     
-       
-    });
+       });
 
-    Route::prefix('author')->middleware([AuthorMiddleware::class])->group(function () {
+    Route::prefix('author')->name('author.')->middleware([AuthorMiddleware::class])->group(function () {
         
 
        Route::get('/dashboard', [AuthorDashboardController::class, 'index'])->name('author.dashboard');
-    
-       
-    });
+       Route::resource('post',  AuthorPostController::class);
+        
+});
 
     Route::middleware([RedirectAuthenticatedMiddleware::class])->group(function () {
         
