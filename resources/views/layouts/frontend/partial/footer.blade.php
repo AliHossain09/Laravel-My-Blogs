@@ -16,10 +16,21 @@
           <h6 class="fw-bold">CATEGORIES</h6>
           <p>BEAUTY · HEALTH · MUSIC · SPORT · DESIGN · TRAVEL</p>
         </div>
-        <div class="col-md-4 mb-3">
+        {{-- <div class="col-md-4 mb-3">
           <h6 class="fw-bold">SUBSCRIBE</h6>
           <input type="email" class="form-control" placeholder="Enter your email">
-        </div>
+        </div> --}}
+        <!-- Subscriber Input -->
+        <div class="col-md-4 mb-3">
+          <h6 class="title"><strong>SUBSCRIBE</strong></h6>
+          <form action="{{ route('subscriber.store') }}" method="POST" class="input-group">
+          @csrf
+            <div class="input-group">
+            <input type="email" class="form-control" name="email" placeholder="Enter your email"  aria-label="Email">
+            <button type="submit" class="btn btn-primary"><i class="material-symbols-outlined">mail</i></button>
+            </div>
+          </form>
+          
       </div>
     </div>
   </footer>

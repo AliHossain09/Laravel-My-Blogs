@@ -138,6 +138,9 @@ class AuthorPostController extends Controller
         // Fetch all categories and tags for the form
         $categories = Category::all();
         $tags = Tag::all();
+        // Toaster Success And Error Messages
+    
+        // Check if the post is already approved
         return view('author.post.edit', compact('post', 'categories', 'tags'));
     }
 

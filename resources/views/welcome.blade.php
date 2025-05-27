@@ -6,17 +6,14 @@
 @section('content')
   <!-- Banner -->
   <div class="container-fluid my-4 px-0">
-    <img  src="https://graphicsfamily.com/wp-content/uploads/edd/2024/12/Business-Web-Banner-Design-01-1180x664.jpg" class="img-fluid max-width: 100%  mx-auto d-block" alt="Banner">
-  </div>
+  <img src="https://graphicsfamily.com/wp-content/uploads/edd/2024/12/Business-Web-Banner-Design-01-1180x664.jpg" 
+       class="img-fluid w-100  d-block" style="height: 300px; object-fit: cover;"
+       alt="Banner">
+</div>
   
   <!-- Blog Grid -->
   <div class="container">
     <div class="row g-4">
-  
-      <!-- Repeating blog card -->
-      <!-- Use Bootstrap 5 card inside col-md-4 -->
-      <!-- Repeat for each post -->
-      <!-- Example Post Card -->
       <div class="col-md-4">
         <div class="card h-100 shadow-sm">
           <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="...">

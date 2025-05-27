@@ -24,8 +24,7 @@
                                         @csrf
                                     </form>
                                 
-                                
-                            </li>
+                                </li>
                         </ul>
                     </div>
                 </div>
@@ -73,6 +72,13 @@
                         <a href="{{ route('admin.post.pending') }}">
                             <i class="material-icons">pending</i>
                             <span>Pending Post</span>
+                        </a>
+                    </li>
+                    {{-- Subscriber Menu --}}
+                    <li class="{{ (Request()->is('admin/subscriber*')) ? 'active' : '' }}">
+                        <a href="{{ route('admin.subscriber.index') }}">
+                            <i class="material-icons">subscriptions</i>
+                            <span>Subscriber</span>
                         </a>
                     </li>
 

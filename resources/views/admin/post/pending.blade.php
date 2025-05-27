@@ -40,7 +40,7 @@
                                             <th> <i class="material-icons">visibility</i> </th>
                                             <th>Is Approved</th>
                                             <th>Status</th>
-                                            <th>Created At</th>
+                                            {{-- <th>Created At</th> --}}
                                             <th>Updated At</th>
                                             <th>Image</th>
                                             <th>Action</th>
@@ -54,7 +54,7 @@
                                             <th> <i class="material-icons">visibility</i> </th>
                                             <th>Is Approved</th>
                                             <th>Status</th>
-                                            <th>Created At</th>
+                                            {{-- <th>Created At</th> --}}
                                             <th>Updated At</th>
                                              <th>Image</th>
                                             <th>Action</th>
@@ -92,7 +92,7 @@
                                                 
 
 
-                                                <td>{{ $post->created_at }}</td>
+                                                {{-- <td>{{ $post->created_at }}</td> --}}
                                                 <td>{{ $post->updated_at }}</td>
                                                 <td class="text-center">
                                                     <img class="img-thumbnail" src="{{ asset('postImages/'.$post->image) }}" style="width: 100px; height: auto;"> </td>
