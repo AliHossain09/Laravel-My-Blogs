@@ -14,7 +14,7 @@ class SubscriberController extends Controller
         $subscribers = Subscriber::all();
         
         // Return the view with the subscribers data
-        return view('admin.subscriber', compact('subscribers'));
+        return view ('admin.subscriber', compact('subscribers'));
     }
     public function destroy($id)
     {

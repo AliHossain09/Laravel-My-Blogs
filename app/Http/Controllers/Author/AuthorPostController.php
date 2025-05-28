@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Author;
 
 use App\Models\Tag;
 use App\Models\Post;
+use App\Models\User;
+use Spatie\Image\Image;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Spatie\Image\Image;
+use App\Notifications\NewAuthorPost;
+use Illuminate\Support\Facades\Notification;
 
 class AuthorPostController extends Controller
 {
@@ -95,7 +98,11 @@ class AuthorPostController extends Controller
         // Attach the category to the post
         $post->categories()->attach($request->category_id);
         $post->tags()->attach($request->tags);
-        
+
+        // Notification for the admin about author the new post
+        $users = User::where('role_id', 1)->get(); // Assuming role_id 1 is for admin
+        Notification::send($users, new NewAuthorPost($post));
+       
 
         // Redirect to the index page with success message
         toastr()->success('Post created successfully.');
