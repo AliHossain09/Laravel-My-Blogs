@@ -9,8 +9,10 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Subscriber;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\AuthorPostApproved;
+use App\Notifications\NewPostNotify;
 use Illuminate\Support\Facades\Notification;
 use Mockery\Matcher\Not;
 
@@ -95,6 +97,11 @@ class PostController extends Controller
         $post->categories()->attach($request->category_id);
         $post->tags()->attach($request->tags);
         
+        $subscribers = Subscriber::all();
+        foreach($subscribers as $subscriber) {
+            Notification::route('mail', $subscriber->email)
+                ->notify(new NewPostNotify($post));
+        }
 
         // Redirect to the index page with success message
         toastr()->success('Post created successfully.');
@@ -200,10 +207,15 @@ class PostController extends Controller
         // Approve the post
         $post->is_approved = true;
         $post->save();
-        
+
         // Notify the author about the approval
         $post->user->notify(new AuthorPostApproved($post));
-        // Notification::send($post->user, new AuthorPostApproved($post));
+        // Notify all subscribers about the new post
+        $subscribers = Subscriber::all();
+        foreach($subscribers as $subscriber) {
+            Notification::route('mail', $subscriber->email)
+                ->notify(new NewPostNotify($post));
+        }
 
         // Redirect to the index page with success message
         toastr()->success('Post approved successfully.');
