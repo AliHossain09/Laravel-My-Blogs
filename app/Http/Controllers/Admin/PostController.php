@@ -10,6 +10,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\AuthorPostApproved;
+use Illuminate\Support\Facades\Notification;
+use Mockery\Matcher\Not;
 
 class PostController extends Controller
 {
@@ -197,6 +200,10 @@ class PostController extends Controller
         // Approve the post
         $post->is_approved = true;
         $post->save();
+        
+        // Notify the author about the approval
+        $post->user->notify(new AuthorPostApproved($post));
+        // Notification::send($post->user, new AuthorPostApproved($post));
 
         // Redirect to the index page with success message
         toastr()->success('Post approved successfully.');
