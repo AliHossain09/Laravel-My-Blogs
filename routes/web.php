@@ -14,8 +14,9 @@ use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController
 use App\Http\Controllers\Author\AuthorPostController;
 use App\Http\Middleware\RedirectAuthenticatedMiddleware;
 use App\Http\Controllers\Author\AuthorDashboardController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () { return view('welcome'); })->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/subscriber', [SubscriberController::class, 'store'])->name('subscriber.store');
 
 
