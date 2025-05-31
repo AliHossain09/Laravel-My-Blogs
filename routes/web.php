@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
 use App\Http\Controllers\Author\AuthorPostController;
 use App\Http\Middleware\RedirectAuthenticatedMiddleware;
@@ -37,13 +38,12 @@ Auth::routes();
     // });
 // ............................................................................................................
     Route::prefix('admin')->name('admin.')->middleware([AdminMiddleware::class])->group(function () {
-        // Route::get('/dashboard', function () { return view('dashboard');});
-
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('settings', [SettingsController::class, 'index'])->name('admin.settings');
+        Route::put('profileUpdate', [SettingsController::class, 'updateProfile'])->name('profile.update');
         Route::resource('tag', TagController::class);
         Route::resource('category', CategoryController::class);
         Route::resource('post', PostController::class);
-
         Route::put('/post/{id}/approve', [PostController::class, 'approve'])->name('post.approve');
         Route::get('pending/post', [PostController::class, 'pending'])->name('post.pending');
         Route::get('subscriber', [AdminSubscriberController::class, 'index'])->name('subscriber.index');

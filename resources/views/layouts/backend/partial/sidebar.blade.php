@@ -86,6 +86,14 @@
                     {{-- Divider Menu --}}
                     <li class="header">System</li>
 
+                    {{-- Settings Menu --}}
+                    <li class="{{ (Request()->is('admin/settings*')) ? 'active' : '' }}">
+                        <a href="{{ route('admin.admin.settings') }}">
+                            <i class="material-icons">settings</i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+
                     {{-- Logout Menu --}}
                     <li>
                        <a class="dropdown-item" href="{{ route('logout') }}"
